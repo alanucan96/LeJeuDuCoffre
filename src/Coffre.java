@@ -37,4 +37,5 @@ public class Coffre {
 		ImageIcon img = new ImageIcon("images/coffre.jpg");
 		JLabel Fond = new JLabel(img);
 		//positionner
+	}
 }
