@@ -1,0 +1,10 @@
+{
+  "Coffre": [
+    { "Cadena1": ["ouvert"],},
+  ],
+  "legumes": {
+      "patates": "amandine",
+      "poireaux": false
+    },
+    "viandes": ["poisson","poulet","boeuf"]
+ }
