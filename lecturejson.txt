@@ -1,0 +1,108 @@
+Récupérer du JSON depuis une API REST avec Android
+
+Note
+
+Ce code permet de récupérer des données JSON (en l'occurence ici des personnes) depuis un Web Service (myurl = Url du Web Service). 
+
+Librairies spécifiques pour le JSON avec Android:
+
+  import org.json.JSONArray;
+  import org.json.JSONObject;
+                
+Code source
+
+Exemple de JSON - Liste de personnes(nom, prénom):
+
+        {
+        "personnes": [
+                { "prenom":"Bilbo" , "nom":"Lehobbit" }, 
+                { "prenom":"Bob" , "nom":"Lescargot" }, 
+                { "prenom":"Jack" , "nom":"Sparrow" }
+            ]
+        }
+                
+Fonction à intégrer dans une classe - Récupère une liste de personnes:
+
+    /**
+     * Récupère une liste de personnes.
+     * @return ArrayList<Personne>: ou autre type de données.
+     * @author François http://www.francoiscolin.fr/
+     */
+    public static ArrayList<Personne> getPersonnes() {
+        
+        ArrayList<Personne> personnes = new ArrayList<Personne>();
+         
+        try {
+            String myurl= "http://www.exemple.com/getPersonnes";
+
+            URL url = new URL(myurl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inputStream = connection.getInputStream();
+            /*
+             * InputStreamOperations est une classe complémentaire:
+             * Elle contient une méthode InputStreamToString.
+             */
+            String result = InputStreamOperations.InputStreamToString(inputStream);
+            
+            // On récupère le JSON complet
+            JSONObject jsonObject = new JSONObject(result);
+            // On récupère le tableau d'objets qui nous concernent
+            JSONArray array = new JSONArray(jsonObject.getString("personnes"));
+            // Pour tous les objets on récupère les infos
+            for (int i = 0; i < array.length(); i++) {
+                // On récupère un objet JSON du tableau
+                JSONObject obj = new JSONObject(array.getString(i));
+                // On fait le lien Personne - Objet JSON
+                Personne personne = new Personne();
+                personne.setNom(obj.getString("nom"));
+                personne.setPrenom(obj.getString("prenom"));
+                // On ajoute la personne à la liste
+                personnes.add(personne);
+               
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // On retourne la liste des personnes
+        return personnes;
+    }
+Classe complémentaire InputStreamOperations.java
+
+package packagename;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+public class InputStreamOperations {
+    
+    /**
+     * @param in : buffer with the php result
+     * @param bufSize : size of the buffer
+     * @return : the string corresponding to the buffer
+     */
+    public static String InputStreamToString (InputStream in, int bufSize) {         
+        final StringBuilder out = new StringBuilder(); 
+        final byte[] buffer = new byte[bufSize]; 
+        try {
+            for (int ctr; (ctr = in.read(buffer)) != -1;) {
+                out.append(new String(buffer, 0, ctr));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot convert stream to string", e);
+        }
+        // On retourne la chaine contenant les donnees de l'InputStream
+        return out.toString(); 
+    }
+    
+    /**
+     * @param in : buffer with the php result
+     * @return : the string corresponding to the buffer
+     */
+    public static String InputStreamToString (InputStream in) {
+        // On appelle la methode precedente avec une taille de buffer par defaut
+        return InputStreamToString(in, 1024);
+    }
+
+}

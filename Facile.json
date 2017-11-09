@@ -1,0 +1,5 @@
+{
+  "Coffre": [
+    { "Cadena1": [{"etat initial":"ouvert", "x":"50", "y":"50", "Relation":["Cadena3","Cadena5"]} ]}
+  ]
+}

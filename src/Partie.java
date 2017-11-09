@@ -28,6 +28,7 @@ public class Partie extends JFrame{
 		FileReader fr = null;
 		String  json = "";
 		
+<<<<<<< HEAD
 		// CONSTRUCTION
  		this.setTitle("Jeu du Coffre");
  		//addWindowListener(new GestionFenetre()); // si on voulait sauver avant de fermer
@@ -49,6 +50,11 @@ public class Partie extends JFrame{
 		try {
 
 			br = new BufferedReader(new FileReader(Difficulte + ".json"));
+=======
+		try {
+
+			br = new BufferedReader(new FileReader("Facile" + ".json"));
+>>>>>>> f25162d1637bdc424493843a20787f29672101a1
 			String sCurrentLine;
 			
 			while ((sCurrentLine = br.readLine()) != null) {
@@ -83,6 +89,7 @@ public class Partie extends JFrame{
 			
 			obj = new JSONObject(json);
 			//String coffre = obj.getJSONObject("Coffre").getString("pageName");
+<<<<<<< HEAD
 			
 			// On récupère le tableau d'objets qui nous concernent
 	        JSONArray array = obj.getJSONArray("Cadena1");
@@ -104,6 +111,31 @@ public class Partie extends JFrame{
 			
 		}
 		
+=======
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	    
+	    // CONSTRUCTION
+	 		this.setTitle("Jeu du Coffre");
+	 		//addWindowListener(new GestionFenetre()); // si on voulait sauver avant de fermer
+	 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+ 			// MISE EN PLACE INTERFACE
+ 			BorderLayout placement=new BorderLayout();
+ 			getContentPane().setLayout(placement);
+	 				
+			JPanel cases = new JPanel();
+ 			getContentPane().add(cases, BorderLayout.CENTER);
+ 			cases.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
+	 				
+ 			// METTRE L'IMAGE DE FOND
+ 			ImageIcon img = new ImageIcon("Image/coffre.png");
+ 			JLabel Fond = new JLabel(img);
+ 			this.add(Fond, BorderLayout.CENTER);
+ 			
+>>>>>>> f25162d1637bdc424493843a20787f29672101a1
  			pack();
  			setVisible(true);
 	}
