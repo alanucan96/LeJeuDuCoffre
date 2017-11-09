@@ -12,10 +12,16 @@ public class Cadena {
 	private Vector vectorRelation;
 	private ImageIcon cadenaFerme, cadenaOuvert;
 	private JLabel imageCadena;
+	private int coordX; 
+	private int coordY;
 	
-	public Cadena(Boolean etat, int numero) {
+	public Cadena(Boolean etat, int numero, int x, int y) {
 		this.etat = etat;
 		this.numero = numero;
+		this.coordX = x;
+		this.coordY = y;
+		cadenaFerme = new ImageIcon("Image/ferme.png");
+		cadenaOuvert = new ImageIcon("Image/ouvert.png");
 		imageCadena = new JLabel();
 		if(etat == true) {
 			imageCadena.setIcon(cadenaOuvert);
@@ -25,8 +31,12 @@ public class Cadena {
 		}
 	}
 	
-	public Boolean getEtat() {
+	public boolean getEtat() {
 		return this.etat;
+	}
+	
+	public void setEtat(boolean e) {
+		this.etat = e;
 	}
 	
 	public int getNumero() {
